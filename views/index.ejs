@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+      
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>BigLink</title>
+  </head>
+  <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="http://biglink.tk">Biglink.tk</a>
+      </nav>
+  <div class="content">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-md-6 order-md-2">
+          <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="mb-4">
+              <center><h3>Shorten your URL with <strong>Biglink.tk</strong></h3></center>
+              <center><p class="mb-4"><strong>The link shortener that has your brand’s back.</strong></p></center>
+            </div>
+             <% if(locals.error){ %>
+              <p class="error text-danger"><%= error %></p>
+              <% } %> 
+            <form action="/" method="post">
+              <div class="form-group first">
+                <label for="long">Long URL</label>
+                <input type="url" name="url" class="form-control" id="url">
+
+              </div>
+              <div class="form-group last mb-4">
+                <label for="custom">Custom Name (Optional)</label>
+                <input type="text" name="custom" class="form-control" id="custom">
+                
+              </div>
+              
+             
+                <% if(locals.short_url){ %>
+                  <span    title="Click here to Copy the Short URL">
+                <div class=" short-url text-success form-group last mb-4 border border-primary rounded">
+                  <i class="bi bi-clipboard"></i>
+                  <div class="input-group " style="margin-bottom: 0px;" onclick="myFunction()">
+                   <span class="input-group-text  text-white bg-block bg-primary" id="basic-addon1"  >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+                      </svg>
+                    </span>
+                    <input type="url" class="form-control form-group last mb- text-success rounded-0" id="myInput" style="padding: 10px; font-weight: 500; font-size: large; min-width: auto;" value="<%= short_url %>" >
+                  </div>
+
+            </div>
+          </span>
+                  <% } %> 
+               
+
+              <input type="submit" value="Shorten" class="btn text-white btn-block btn-primary" id="submit_button" disabled>
+
+      
+            </form>
+           
+            <div class="d-flex mb-5 align-items-center">
+              <br>
+              <label ><span class="caption">Terms and Conditions Applied.</span><br>
+              <label class="control control--checkbox mb-0 text-primary"><span class="caption">I accept</span>
+                <input type="checkbox" value='1'  onclick="terms_changed(this)" id="ckbox"/>
+                <div class="control__indicator"></div>
+              </label>
+              
+            </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container d-flex justify-content-center">
+    <a href="#" class="text-danger">Note : Short Url is valid for atleast 100 days based on number of url genrated per month. You can use it more till it gets expired.</a>
+  </div>
+<!-- Footer -->
+<footer class="page-footer font-small ">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="http://biglink.tk/"> Biglink.tk</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
