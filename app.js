@@ -7,10 +7,11 @@ const urlhref =require('url');
 const URI="mongodb+srv://dbUser:dbUser@cluster0.r7bte.mongodb.net/url-shortner?retryWrites=true&w=majority"
 const ShortUrl=require('./models/url.model')
 const app=express();
+const port = process.env.PORT || 1337;
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-////////////////////////////////////
+/////////////////////////////////////
 
 
 // const MongoClient = require('mongodb').MongoClient;
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended:false}))
 
 
 ///////////////////////////
+
 mongoose.connect(URI,{
     dbName:'url-shortner',
     useNewUrlParser:true,
@@ -33,16 +35,41 @@ mongoose.connect(URI,{
 }).then(()=>console.log('mongoose connected'))
 .catch((error)=>console.log('Error in mongodb connection:'+ error))
 
+
 app.set('view engine','ejs');
 
-app.get('/',async(req,res,next)=>{
-    res.render('index')
+
+
+app.get('/:shortId',async(req,res,next)=>{
+   try {
+    const {shortId}=req.params
+    const result=await ShortUrl.findOne({shortId})
+    if(!result){
+            throw createHttpError.NotFound('short url does not exist')
+    }
+    res.redirect(result.url)
+   } catch (error) {
+       next(error)
+   }
+   
+})
+
+
+
+
+
+app.get('*',async(req,res,next)=>{
+    
+     var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("fullUrl: "+fullUrl);
+        res.render('index')
+        //res.end("Hello World!");
 })
 
 app.post('/',async(req,res,next)=>{
     try{
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        
+        console.log("fullUrl: "+fullUrl);
             const {url}=req.body
             const {custom}=req.body
            
@@ -91,20 +118,8 @@ app.post('/',async(req,res,next)=>{
 
 })
 
-app.get('/:shortId',async(req,res,next)=>{
-   try {
-    const {shortId}=req.params
-    const result=await ShortUrl.findOne({shortId})
-    if(!result){
-            throw createHttpError.NotFound('short url does not exist')
-    }
-    res.redirect(result.url)
-   } catch (error) {
-       next(error)
-   }
-   
-})
 
+//here
 
 app.use((req,res,next)=>{
 next(createHttpError.NotFound())
@@ -117,4 +132,20 @@ app.use((err,req,res,next)=>{
 })
 
 
-app.listen(3000,()=>console.log("Server is running at port 3000"));
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
+/*
+const express=require('express');
+const app=express();
+const port = process.env.PORT || 1337;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+*/
